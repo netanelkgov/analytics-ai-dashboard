@@ -1,0 +1,34 @@
+[build]
+  # Directory where the build system will look for package.json, etc.
+  base = "."
+  
+  # Directory to publish (relative to root of your repo)
+  publish = "."
+  
+  # Default build command.
+  command = "echo 'No build command'"
+
+[functions]
+  # Directory where your serverless functions are located
+  directory = "netlify/functions"
+  
+  # Use Node.js 18
+  node_bundler = "nft"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Redirect rules for client-side routing (if needed)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

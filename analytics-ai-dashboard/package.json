@@ -2,10 +2,31 @@
   "name": "analytics-ai-dashboard",
   "version": "1.0.0",
   "description": "Government Analytics Dashboard with AI",
-  "main": "index.html",
+  "type": "module",
   "scripts": {
-    "build": "echo 'No build step required'"
+    "build": "echo 'Static site - no build required'",
+    "dev": "netlify dev",
+    "deploy": "netlify deploy --prod"
   },
+  "dependencies": {
+    "@netlify/functions": "^2.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^15.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/analytics-ai-dashboard.git"
+  },
+  "keywords": [
+    "government",
+    "analytics", 
+    "dashboard",
+    "netlify-functions"
+  ],
   "author": "Netanel Cooperman",
   "license": "MIT"
 }

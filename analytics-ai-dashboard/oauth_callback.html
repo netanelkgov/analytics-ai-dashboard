@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+    <meta charset="UTF-8">
+    <title>Google Analytics Authentication</title>
+    <style>
+        body {
+            font-family: 'Assistant', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .callback-container {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(100,255,218,0.3);
+            border-top: 3px solid #64ffda;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="callback-container">
+        <div class="spinner"></div>
+        <h2>מתחבר ל-Google Analytics...</h2>
+        <p>החלון ייסגר אוטומטית</p>
+    </div>
+
+    <script>
+        function handleOAuthCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const code = urlParams.get('code');
+            const error = urlParams.get('error');
+            
+            if (code) {
+                // Send code to parent window
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'GA4_AUTH_SUCCESS',
+                        code: code
+                    }, '*');
+                    window.close();
+                } else {
+                    // If no opener, store in localStorage and redirect
+                    localStorage.setItem('ga4_auth_code', code);
+                    window.location.href = './gov_dashboard_edit.html';
+                }
+            } else if (error) {
+                if (window.opener) {
+                    window.opener.postMessage({
+                        type: 'GA4_AUTH_ERROR',
+                        error: error
+                    }, '*');
+                    window.close();
+                } else {
+                    alert('Authentication failed: ' + error);
+                    window.location.href = './gov_dashboard_edit.html';
+                }
+            }
+        }
+
+        // Run callback handler
+        handleOAuthCallback();
+    </script>
+</body>
+</html>

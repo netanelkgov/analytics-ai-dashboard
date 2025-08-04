@@ -1,0 +1,11 @@
+{
+  "name": "analytics-ai-dashboard",
+  "version": "1.0.0",
+  "description": "Government Analytics Dashboard with AI",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build step required'"
+  },
+  "author": "Netanel Cooperman",
+  "license": "MIT"
+}
